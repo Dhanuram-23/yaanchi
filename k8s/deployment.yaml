@@ -1,1 +1,56 @@
-scm,cm
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: yaanchii-app
+labels:
+app: yaanchii-app
+
+spec:
+replicas: 1
+
+selector:
+matchLabels:
+app: yaanchii-app
+
+template:
+metadata:
+labels:
+app: yaanchii-app
+
+```
+spec:
+  containers:
+    - name: yaanchii-app
+
+      image: dhanu23/yaanchii:latest
+
+      imagePullPolicy: Always
+
+      ports:
+        - containerPort: 8080
+
+      env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/yaanchii
+
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: username
+
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+```
