@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+mysql:
+image: mysql:8.4
+container_name: yaanchii-mysql
+restart: unless-stopped
+
+```
+environment:
+  MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  MYSQL_DATABASE: ${MYSQL_DATABASE}
+  MYSQL_USER: ${MYSQL_USER}
+  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+ports:
+  - "3306:3306"
+
+volumes:
+  - mysql-data:/var/lib/mysql
+
+healthcheck:
+  test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  interval: 10s
+  timeout: 5s
+  retries: 10
+```
+
+yaanchii:
+build:
+context: .
+dockerfile: Dockerfile
+
+```
+container_name: yaanchii-app
+restart: unless-stopped
+
+depends_on:
+  mysql:
+    condition: service_healthy
+
+environment:
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+  SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+  SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  SPRING_JPA_SHOW_SQL: "true"
+
+ports:
+  - "8080:8080"
+```
+
+volumes:
+mysql-data:
