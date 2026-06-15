@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | Yaanchii</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+
+        .auth-container {
+            min-height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .auth-card {
+            width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .auth-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .auth-footer a {
+            color: #d63384;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        YAAN<span>CHII</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/">Collections</a>
+    </div>
+
+</nav>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h2>Create Your Account</h2>
+
+        <form th:action="@{/signup}"
+              method="post">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                        type="text"
+                        name="fullName"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                        type="email"
+                        name="email"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                        type="password"
+                        name="password"
+                        required>
+
+            </div>
+
+            <button
+                    type="submit"
+                    class="btn full-width">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="footer">
+
+    <h3>YAANCHII</h3>
+
+    <p>Fashion. Style. Confidence.</p>
+
+</footer>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
